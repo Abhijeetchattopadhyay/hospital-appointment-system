@@ -1,8 +1,11 @@
 import express from "express";
+import upload from "../middleware/uploadMiddleware.js";
 import {
   createDoctorProfile,
   getAllDoctors,
-  getDoctorProfile
+  getDoctorProfile,
+  updateDoctorProfile,
+  uploadDoctorPhoto
 } from "../controllers/doctorController.js";
 
 import { protect, authorizeRoles } from "../middleware/authMiddleware.js";
@@ -24,5 +27,19 @@ router.get(
   authorizeRoles("doctor"),
   getDoctorProfile
 );
+router.put(
+  "/profile",
+  protect,
+  authorizeRoles("doctor"),
+  updateDoctorProfile
+);
+router.post(
+  "/upload-photo",
+  protect,
+  authorizeRoles("doctor"),
+  upload.single("profileImage"),
+  uploadDoctorPhoto
+);
 
 export default router;
+
