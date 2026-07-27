@@ -1,0 +1,12 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  background-color: var(--bg-main, #F8FAFC);
+  color: var(--text-primary, #1E293B);
+  overflow-x: hidden;
+}

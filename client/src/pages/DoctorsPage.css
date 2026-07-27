@@ -1,0 +1,426 @@
+.doctors-page {
+  width: 100%;
+  min-height: 100vh;
+  background-color: var(--bg-main, #F8FAFC);
+}
+
+/* Hero Section */
+.doctors-hero {
+  background: linear-gradient(135deg, var(--dark-navy) 0%, #173b5e 100%);
+  color: white;
+  padding: 80px 8% 100px;
+  text-align: center;
+  position: relative;
+}
+
+.doctors-hero h1 {
+  font-size: 48px;
+  font-weight: 800;
+  margin-bottom: 20px;
+  letter-spacing: -1.5px;
+  color: white;
+}
+
+.doctors-hero p {
+  font-size: 19px;
+  color: #D9E8FC;
+  max-width: 700px;
+  margin: 0 auto 36px;
+  line-height: 1.7;
+}
+
+/* Stats Counter Row */
+.doctors-stats-row {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 24px;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.doctors-stat-tile {
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 20px;
+  padding: 20px;
+  text-align: center;
+  transition: all 0.3s ease;
+}
+
+.doctors-stat-tile:hover {
+  transform: translateY(-4px);
+  background: rgba(255, 255, 255, 0.12);
+  border-color: rgba(255, 255, 255, 0.25);
+}
+
+.doctors-stat-tile h4 {
+  font-size: 28px;
+  font-weight: 800;
+  color: var(--secondary);
+  margin-bottom: 6px;
+}
+
+.doctors-stat-tile p {
+  font-size: 13.5px;
+  color: #D9E8FC;
+  margin: 0;
+  font-weight: 600;
+}
+
+/* Featured Carousel */
+.featured-carousel-section {
+  width: 84%;
+  max-width: 1280px;
+  margin: 60px auto 40px;
+}
+
+.carousel-title-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+}
+
+.carousel-title-row h2 {
+  font-size: 26px;
+  font-weight: 800;
+  color: var(--dark-navy);
+  letter-spacing: -0.5px;
+}
+
+.carousel-track-wrapper {
+  overflow-x: auto;
+  padding-bottom: 20px;
+}
+
+.carousel-track {
+  display: flex;
+  gap: 24px;
+}
+
+/* Split Directory Layout */
+.doctors-content-section {
+  width: 84%;
+  max-width: 1280px;
+  margin: 40px auto 80px;
+  display: grid;
+  grid-template-columns: 300px 1fr;
+  gap: 36px;
+  position: relative;
+  z-index: 10;
+}
+
+/* Left Filter Sidebar */
+.filters-sidebar {
+  background: white;
+  border-radius: 28px;
+  padding: 30px 24px;
+  box-shadow: 0 15px 40px rgba(15, 41, 66, 0.04);
+  border: 1px solid rgba(226, 232, 240, 0.8);
+  height: fit-content;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.sidebar-title-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1.5px solid var(--border-light);
+  padding-bottom: 14px;
+}
+
+.sidebar-title-row h3 {
+  font-size: 18px;
+  font-weight: 800;
+  color: var(--dark-navy);
+  margin: 0;
+}
+
+.reset-filter-btn {
+  background: none;
+  border: none;
+  color: var(--primary);
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.reset-filter-btn:hover {
+  text-decoration: underline;
+}
+
+.filter-group {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.filter-group label {
+  font-size: 13.5px;
+  font-weight: 700;
+  color: var(--dark-navy);
+}
+
+.filter-group input[type="text"],
+.filter-group select {
+  width: 100%;
+  height: 44px;
+  padding: 10px 14px;
+  border-radius: 12px;
+  border: 1.5px solid var(--border-light, #E2E8F0);
+  font-size: 14px;
+  color: var(--text-primary);
+  background: white;
+  transition: all 0.25s ease;
+}
+
+.filter-group input[type="text"]:focus,
+.filter-group select:focus {
+  outline: none;
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(26, 115, 232, 0.1);
+}
+
+/* Search Box Suggestions */
+.directory-results-container {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}
+
+.top-search-banner {
+  background: white;
+  border-radius: 24px;
+  padding: 20px 24px;
+  box-shadow: 0 10px 30px rgba(15, 41, 66, 0.03);
+  border: 1px solid rgba(226, 232, 240, 0.8);
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.search-input-box {
+  flex: 1;
+  position: relative;
+}
+
+.search-input-box input {
+  width: 100%;
+  height: 48px;
+  padding: 10px 16px 10px 44px;
+  border-radius: 12px;
+  border: 1.5px solid var(--border-light);
+  font-size: 14.5px;
+}
+
+.search-input-box input:focus {
+  outline: none;
+  border-color: var(--primary);
+}
+
+.search-input-icon {
+  position: absolute;
+  left: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--text-secondary);
+}
+
+.suggestions-dropdown {
+  position: absolute;
+  top: 54px;
+  left: 0;
+  width: 100%;
+  background: white;
+  border-radius: 16px;
+  box-shadow: 0 15px 35px rgba(15, 41, 66, 0.1);
+  border: 1px solid rgba(226, 232, 240, 0.8);
+  z-index: 100;
+  max-height: 220px;
+  overflow-y: auto;
+}
+
+.suggestion-item {
+  padding: 12px 20px;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  transition: all 0.2s ease;
+}
+
+.suggestion-item:hover {
+  background-color: var(--bg-main);
+}
+
+.suggestion-name {
+  font-weight: 700;
+  color: var(--dark-navy);
+}
+
+.suggestion-specialization {
+  font-size: 12px;
+  color: var(--text-secondary);
+  background: var(--primary-light);
+  padding: 2px 8px;
+  border-radius: 50px;
+  font-weight: 700;
+}
+
+/* Doctors Card Extra Attributes */
+.doctors-list-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 24px;
+}
+
+.online-pulse-wrapper {
+  position: absolute;
+  top: 16px;
+  left: 16px;
+  background: rgba(255, 255, 255, 0.9);
+  padding: 4px 10px;
+  border-radius: 50px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 11px;
+  font-weight: 700;
+  color: #059669;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+}
+
+.online-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background-color: #059669;
+  animation: pulse-dot 1.5s infinite ease-in-out;
+}
+
+@keyframes pulse-dot {
+  0% { transform: scale(0.9); opacity: 0.6; }
+  50% { transform: scale(1.2); opacity: 1; }
+  100% { transform: scale(0.9); opacity: 0.6; }
+}
+
+.doctor-verified-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  color: var(--primary);
+  font-size: 12.5px;
+  font-weight: 700;
+  margin-top: 4px;
+}
+
+.doctor-languages {
+  font-size: 12.5px;
+  color: var(--text-secondary);
+  margin-top: 6px;
+}
+
+/* Mock Map Section */
+.hospitals-map-section {
+  width: 84%;
+  max-width: 1280px;
+  margin: 0 auto 80px;
+  display: grid;
+  grid-template-columns: 1fr 1.5fr;
+  gap: 40px;
+  background: white;
+  border-radius: 28px;
+  padding: 40px;
+  box-shadow: 0 15px 40px rgba(15, 41, 66, 0.04);
+  border: 1px solid rgba(226, 232, 240, 0.8);
+}
+
+.map-info-pane h2 {
+  font-size: 26px;
+  font-weight: 800;
+  color: var(--dark-navy);
+  margin-bottom: 12px;
+}
+
+.map-hospital-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-top: 24px;
+}
+
+.map-hospital-card {
+  padding: 16px;
+  border-radius: 16px;
+  border: 1.5px solid var(--border-light);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.map-hospital-card.active {
+  border-color: var(--primary);
+  background: var(--primary-light);
+}
+
+.map-hospital-card h4 {
+  margin: 0 0 4px;
+  font-weight: 700;
+  color: var(--dark-navy);
+}
+
+.map-hospital-card p {
+  margin: 0;
+  font-size: 13.5px;
+  color: var(--text-secondary);
+}
+
+.map-graphic-pane {
+  background: #EBF2FA;
+  border-radius: 20px;
+  position: relative;
+  overflow: hidden;
+  min-height: 320px;
+  border: 1px solid var(--border-light);
+}
+
+/* Stylized hospital markers */
+.map-marker {
+  position: absolute;
+  width: 32px;
+  height: 32px;
+  background: white;
+  color: var(--primary);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 6px 15px rgba(26, 115, 232, 0.2);
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  border: 2px solid var(--primary);
+}
+
+.map-marker.active {
+  background: var(--primary);
+  color: white;
+  transform: scale(1.15);
+}
+
+@media (max-width: 992px) {
+  .doctors-stats-row {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .hospitals-map-section {
+    grid-template-columns: 1fr;
+    padding: 24px;
+  }
+}
+
+@media (max-width: 576px) {
+  .doctors-stats-row {
+    grid-template-columns: 1fr;
+  }
+}

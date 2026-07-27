@@ -44,6 +44,11 @@ const appointmentSchema = new mongoose.Schema(
     amount: {
       type: Number,
       required: true
+    },
+
+    prescription: {
+      type: String,
+      default: ""
     }
   },
   { timestamps: true }

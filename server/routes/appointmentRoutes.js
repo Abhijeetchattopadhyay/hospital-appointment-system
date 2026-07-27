@@ -3,7 +3,10 @@ import {
   bookAppointment,
   getMyAppointments,
   getDoctorAppointments,
-  updateAppointmentStatus
+  updateAppointmentStatus,
+  payAppointment,
+  getAllAppointments,
+  adminDeleteAppointment
 } from "../controllers/appointmentController.js";
 
 import { protect, authorizeRoles } from "../middleware/authMiddleware.js";
@@ -40,6 +43,28 @@ router.put(
   protect,
   authorizeRoles("doctor"),
   updateAppointmentStatus
+);
+
+// Patient pays for appointment
+router.put(
+  "/:id/pay",
+  protect,
+  authorizeRoles("patient"),
+  payAppointment
+);
+
+// Admin routes for appointments
+router.get(
+  "/all",
+  protect,
+  authorizeRoles("admin"),
+  getAllAppointments
+);
+router.delete(
+  "/:id",
+  protect,
+  authorizeRoles("admin"),
+  adminDeleteAppointment
 );
 
 export default router;

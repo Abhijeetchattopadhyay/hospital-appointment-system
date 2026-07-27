@@ -59,6 +59,11 @@ const doctorSchema = new mongoose.Schema(
       type: String
     },
 
+    degree: {
+      type: String,
+      default: ""
+    },
+
     isApproved: {
       type: Boolean,
       default: false

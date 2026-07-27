@@ -28,7 +28,8 @@ export const bookAppointment = async (req, res) => {
       appointmentDate,
       appointmentTime,
       reason,
-      amount: doctor.consultationFee
+      amount: doctor.consultationFee,
+      paymentStatus: req.body.paymentId ? "paid" : "pending"
     });
 
     res.status(201).json({
@@ -72,7 +73,7 @@ export const getDoctorAppointments = async (req, res) => {
     const appointments = await Appointment.find({
       doctor: doctor._id
     })
-      .populate("patient", "name email")
+      .populate("patient", "name email gender dob")
       .populate({
         path: "doctor",
         populate: {
@@ -89,7 +90,7 @@ export const getDoctorAppointments = async (req, res) => {
 };
 export const updateAppointmentStatus = async (req, res) => {
   try {
-    const { status } = req.body;
+    const { status, prescription } = req.body;
 
     const allowedStatus = ["approved", "rejected", "completed"];
 
@@ -118,6 +119,9 @@ export const updateAppointmentStatus = async (req, res) => {
     }
 
     appointment.status = status;
+    if (status === "completed") {
+      appointment.prescription = prescription || "";
+    }
 
     const updatedAppointment = await appointment.save();
 
@@ -125,6 +129,64 @@ export const updateAppointmentStatus = async (req, res) => {
       message: `Appointment ${status} successfully`,
       appointment: updatedAppointment
     });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+export const payAppointment = async (req, res) => {
+  try {
+    const appointment = await Appointment.findById(req.params.id);
+
+    if (!appointment) {
+      return res.status(404).json({ message: "Appointment not found" });
+    }
+
+    if (appointment.patient.toString() !== req.user._id.toString()) {
+      return res.status(403).json({
+        message: "You are not authorized to pay for this appointment"
+      });
+    }
+
+    appointment.paymentStatus = "paid";
+    const updatedAppointment = await appointment.save();
+
+    res.status(200).json({
+      message: "Payment successful",
+      appointment: updatedAppointment
+    });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+export const getAllAppointments = async (req, res) => {
+  try {
+    const appointments = await Appointment.find({})
+      .populate("patient", "name email")
+      .populate({
+        path: "doctor",
+        populate: {
+          path: "user",
+          select: "name email"
+        }
+      })
+      .sort({ createdAt: -1 });
+
+    res.status(200).json(appointments);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+export const adminDeleteAppointment = async (req, res) => {
+  try {
+    const appointment = await Appointment.findById(req.params.id);
+    if (!appointment) {
+      return res.status(404).json({ message: "Appointment not found" });
+    }
+    await Appointment.findByIdAndDelete(req.params.id);
+    res.status(200).json({ message: "Appointment deleted successfully" });
   } catch (error) {
     res.status(500).json({ message: error.message });
   }

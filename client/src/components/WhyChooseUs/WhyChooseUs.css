@@ -1,0 +1,131 @@
+.why-choose-section {
+  width: 100%;
+  padding: 80px 0;
+  display: flex;
+  justify-content: center;
+  background: #ffffff;
+  box-sizing: border-box;
+}
+
+.why-choose-container {
+  width: 88%;
+  max-width: 1280px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 80px;
+}
+
+.why-choose-left {
+  flex: 1.2;
+  display: flex;
+  flex-direction: column;
+}
+
+.why-choose-title {
+  font-size: 36px;
+  font-weight: 700;
+  color: #0F2942;
+  margin: 0 0 16px 0;
+  letter-spacing: -0.5px;
+}
+
+.why-choose-desc {
+  font-size: 16px;
+  color: var(--text-secondary);
+  line-height: 1.6;
+  margin: 0 0 40px 0;
+}
+
+.features-list {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+
+.feature-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 20px;
+}
+
+.feature-icon-wrapper {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: #EBF5F3;
+  color: var(--primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  flex-shrink: 0;
+}
+
+.feature-text h3 {
+  font-size: 18px;
+  font-weight: 700;
+  color: #0F2942;
+  margin: 0 0 6px 0;
+}
+
+.feature-text p {
+  font-size: 14px;
+  color: var(--text-secondary);
+  line-height: 1.5;
+  margin: 0;
+}
+
+.why-choose-right {
+  flex: 0.9;
+  display: flex;
+  justify-content: center;
+}
+
+.why-choose-image-container {
+  width: 100%;
+  max-width: 460px;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 20px 40px rgba(0, 95, 84, 0.05);
+  border: 4px solid #f8fbfa;
+}
+
+.why-choose-img {
+  width: 100%;
+  height: auto;
+  display: block;
+  object-fit: cover;
+  transition: transform 0.4s ease;
+}
+
+.why-choose-image-container:hover .why-choose-img {
+  transform: scale(1.02);
+}
+
+@media (max-width: 992px) {
+  .why-choose-container {
+    flex-direction: column;
+    gap: 50px;
+  }
+  .why-choose-left, .why-choose-right {
+    width: 100%;
+    flex: none;
+  }
+  .why-choose-right {
+    order: -1; /* Place image on top on tablet */
+  }
+  .why-choose-image-container {
+    max-width: 100%;
+  }
+}
+
+@media (max-width: 576px) {
+  .why-choose-title {
+    font-size: 28px;
+  }
+  .feature-item {
+    flex-direction: column;
+    gap: 12px;
+  }
+}

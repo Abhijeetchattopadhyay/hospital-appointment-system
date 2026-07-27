@@ -5,7 +5,9 @@ import {
   getAllDoctors,
   getDoctorProfile,
   updateDoctorProfile,
-  uploadDoctorPhoto
+  uploadDoctorPhoto,
+  approveDoctorProfile,
+  deleteDoctorProfile
 } from "../controllers/doctorController.js";
 
 import { protect, authorizeRoles } from "../middleware/authMiddleware.js";
@@ -39,6 +41,21 @@ router.post(
   authorizeRoles("doctor"),
   upload.single("profileImage"),
   uploadDoctorPhoto
+);
+
+// Admin-specific endpoints
+router.put(
+  "/:id/approve",
+  protect,
+  authorizeRoles("admin"),
+  approveDoctorProfile
+);
+
+router.delete(
+  "/:id",
+  protect,
+  authorizeRoles("admin"),
+  deleteDoctorProfile
 );
 
 export default router;
