@@ -114,7 +114,7 @@ export const loginUser = async (req, res) => {
     const { email, password } = req.body;
 
     if (!email || !validateEmail(email)) {
-      return res.status(400).json({ message: "Please enter a valid email address without typos." });
+      return res.status(400).json({ message: "Please enter a valid email address" });
     }
 
     const user = await User.findOne({ email });
