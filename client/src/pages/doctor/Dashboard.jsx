@@ -3,6 +3,7 @@ import Footer from "../../components/common/Footer/Footer";
 import { useAuth } from "../../context/AuthContext";
 import { getDoctorProfile, createDoctorProfile, updateDoctorProfile, uploadDoctorPhoto } from "../../services/doctorService";
 import { getDoctorAppointments, updateAppointmentStatus } from "../../services/appointmentService";
+import { getImageUrl } from "../../utils/imageUrl";
 import { 
   FaUserMd, FaHospital, FaRegClock, FaRupeeSign, FaCheck, 
   FaTimes, FaCalendarAlt, FaClock, FaStethoscope, FaCamera, 
@@ -546,7 +547,7 @@ const DoctorDashboard = () => {
         {/* Top Header Section */}
         <header className="main-content-header">
           <div className="header-welcome">
-            <h1>Welcome, Dr. {user?.name || "Doctor"}</h1>
+            <h1>Welcome, {user?.name?.trim()?.startsWith("Dr.") ? user.name : `Dr. ${user?.name || "Doctor"}`}</h1>
             <p className="header-subtitle">Manage your patient consultation requests and schedule.</p>
           </div>
           
@@ -561,7 +562,7 @@ const DoctorDashboard = () => {
             
             <div className="header-doctor-profile" onClick={() => setActiveTab("profile")}>
               <img 
-                src={profile?.profileImage ? `http://localhost:5000${profile.profileImage}` : `http://localhost:5000/uploads/default-doctor.png`}
+                src={getImageUrl(profile?.profileImage)}
                 alt={user?.name}
                 onError={(e) => {
                   e.target.onerror = null;
@@ -570,7 +571,7 @@ const DoctorDashboard = () => {
                 className="header-doctor-avatar"
               />
               <div className="header-doctor-meta">
-                <span className="doctor-name">Dr. {user?.name}</span>
+                <span className="doctor-name">{user?.name?.trim()?.startsWith("Dr.") ? user.name : `Dr. ${user?.name || "Doctor"}`}</span>
                 <span className="doctor-spec">{profile?.specialization || "General Practitioner"}</span>
               </div>
             </div>

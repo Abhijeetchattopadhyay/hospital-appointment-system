@@ -2,11 +2,11 @@
 .doctor-dashboard-layout {
   display: flex;
   width: 100%;
-  min-height: 100vh;
+  height: 100vh;
+  overflow: hidden;
   background-color: var(--bg-main, #f8fafc);
   font-family: var(--sans, 'Inter', sans-serif);
   box-sizing: border-box;
-  overflow-x: hidden;
 }
 
 /* Sidebar Styling */
@@ -19,12 +19,14 @@
   flex-direction: column;
   padding: 28px 20px;
   box-sizing: border-box;
-  position: sticky;
+  position: fixed;
+  left: 0;
   top: 0;
   height: 100vh;
   border-right: 1px solid rgba(255, 255, 255, 0.05);
   flex-shrink: 0;
-  z-index: 50;
+  z-index: 100;
+  overflow-y: auto;
 }
 
 .sidebar-brand {
@@ -124,7 +126,9 @@
 .doctor-main-content {
   flex: 1;
   min-width: 0;
-  padding: 40px 6%;
+  margin-left: 260px;
+  height: 100vh;
+  padding: 40px 4%;
   box-sizing: border-box;
   overflow-x: hidden;
   overflow-y: auto;
@@ -1058,6 +1062,8 @@
 @media (max-width: 992px) {
   .doctor-dashboard-layout {
     flex-direction: column;
+    height: auto;
+    overflow: visible;
   }
   .doctor-sidebar {
     width: 100%;
@@ -1081,6 +1087,8 @@
     white-space: nowrap;
   }
   .doctor-main-content {
+    margin-left: 0;
+    height: auto;
     padding: 24px 16px;
   }
   .overview-layout-grid {
