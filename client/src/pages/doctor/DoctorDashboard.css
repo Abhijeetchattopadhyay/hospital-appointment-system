@@ -3,8 +3,8 @@
   display: flex;
   width: 100%;
   min-height: 100vh;
-  background-color: var(--bg-main);
-  font-family: var(--sans);
+  background-color: var(--bg-main, #f8fafc);
+  font-family: var(--sans, 'Inter', sans-serif);
   box-sizing: border-box;
   overflow-x: hidden;
 }
@@ -12,17 +12,19 @@
 /* Sidebar Styling */
 .doctor-sidebar {
   width: 260px;
-  background-color: var(--dark-navy);
+  min-width: 260px;
+  background-color: var(--dark-navy, #0f172a);
   color: white;
   display: flex;
   flex-direction: column;
-  padding: 30px 20px;
+  padding: 28px 20px;
   box-sizing: border-box;
   position: sticky;
   top: 0;
   height: 100vh;
   border-right: 1px solid rgba(255, 255, 255, 0.05);
   flex-shrink: 0;
+  z-index: 50;
 }
 
 .sidebar-brand {
@@ -417,10 +419,17 @@
 }
 
 /* Doctor Custom Table */
-/* Doctor Custom Table */
+.doc-table-scroll-container {
+  width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  border-radius: 14px;
+}
+
 .doc-custom-table {
   width: 100%;
   border-collapse: collapse;
+  min-width: 600px;
 }
 
 .doc-custom-table th {
@@ -1046,12 +1055,13 @@
 }
 
 /* Responsive Overrides */
-@media (max-width: 1200px) {
+@media (max-width: 992px) {
   .doctor-dashboard-layout {
     flex-direction: column;
   }
   .doctor-sidebar {
     width: 100%;
+    min-width: 100%;
     height: auto;
     position: relative;
     padding: 20px;
@@ -1068,16 +1078,14 @@
   .menu-item {
     width: auto;
     padding: 10px 16px;
+    white-space: nowrap;
   }
   .doctor-main-content {
-    padding: 30px 4%;
+    padding: 24px 16px;
   }
   .overview-layout-grid {
     grid-template-columns: 1fr;
   }
-}
-
-@media (max-width: 992px) {
   .dashboard-stats-grid {
     grid-template-columns: repeat(2, 1fr);
   }

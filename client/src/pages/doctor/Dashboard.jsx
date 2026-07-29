@@ -207,8 +207,9 @@ const DoctorDashboard = () => {
 
   useEffect(() => {
     // Fetch all doctor profile & appointments
-    const fetchData = async () => {
+    const fetchData = async (isSilent = false) => {
       try {
+        if (!isSilent) setLoading(true);
         try {
           const profileData = await getDoctorProfile();
           if (profileData) {
@@ -231,11 +232,27 @@ const DoctorDashboard = () => {
       } catch (err) {
         console.error("Dashboard failed to load fully:", err);
       } finally {
-        setLoading(false);
+        if (!isSilent) setLoading(false);
       }
     };
 
-    fetchData();
+    fetchData(false);
+
+    // Live real-time polling interval (every 4 seconds)
+    const liveInterval = setInterval(() => {
+      fetchData(true);
+    }, 4000);
+
+    // Live update when window regains focus / user switches tabs
+    const handleWindowFocus = () => {
+      fetchData(true);
+    };
+    window.addEventListener("focus", handleWindowFocus);
+
+    return () => {
+      clearInterval(liveInterval);
+      window.removeEventListener("focus", handleWindowFocus);
+    };
   }, [refreshTrigger]);
 
   // Automatically switch to profile tab if credentials aren't configured yet
@@ -757,7 +774,7 @@ const DoctorDashboard = () => {
                     </div>
                     <div className="widget-body">
                       {appointments.length > 0 ? (
-                        <div className="table-responsive">
+                        <div className="table-responsive doc-table-scroll-container">
                           <table className="doc-custom-table">
                             <thead>
                               <tr>

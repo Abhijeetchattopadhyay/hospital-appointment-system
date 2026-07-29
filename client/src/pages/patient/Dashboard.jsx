@@ -321,17 +321,35 @@ const PatientDashboard = () => {
   };
 
   useEffect(() => {
-    const fetchAppointments = async () => {
+    const fetchAppointments = async (isSilent = false) => {
       try {
+        if (!isSilent) setLoading(true);
         const data = await getPatientAppointments();
         setAppointments(data);
       } catch (err) {
         console.error("Failed to load appointments:", err);
       } finally {
-        setLoading(false);
+        if (!isSilent) setLoading(false);
       }
     };
-    fetchAppointments();
+
+    fetchAppointments(false);
+
+    // Live real-time polling interval (every 4 seconds)
+    const liveInterval = setInterval(() => {
+      fetchAppointments(true);
+    }, 4000);
+
+    // Live update when window regains focus / user switches tabs
+    const handleWindowFocus = () => {
+      fetchAppointments(true);
+    };
+    window.addEventListener("focus", handleWindowFocus);
+
+    return () => {
+      clearInterval(liveInterval);
+      window.removeEventListener("focus", handleWindowFocus);
+    };
   }, []);
 
   const [dismissedNotifs, setDismissedNotifs] = useState(() => {
