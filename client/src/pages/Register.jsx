@@ -117,10 +117,11 @@ const Register = () => {
       }, 2000);
     } catch (err) {
       console.error(err);
-      setError(
-        err.response?.data?.message || 
-        "Failed to create account. Email may already be registered."
-      );
+      if (!err.response) {
+        setError("Cannot connect to the server. Please make sure the server is running and try again.");
+      } else {
+        setError(err.response?.data?.message || "Failed to create account. Please try again.");
+      }
       setLoading(false);
     }
   };
