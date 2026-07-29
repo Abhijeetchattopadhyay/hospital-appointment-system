@@ -3,12 +3,19 @@ import { Link, useSearchParams } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
 import { getPatientAppointments, payAppointment } from "../../services/appointmentService";
 import { updateProfile } from "../../services/authService";
+import { getImageUrl } from "../../utils/imageUrl";
 import { 
   CalendarRange, Plus, Stethoscope, Clock, ArrowRight, FileSpreadsheet, X,
   Bell, Search, HeartPulse, LayoutDashboard, User, Settings, Home, ChevronRight
 } from "lucide-react";
 import { FaCheckCircle, FaHourglassHalf, FaTimesCircle, FaCalendarAlt, FaExclamationTriangle } from "react-icons/fa";
 import "./PatientDashboard.css";
+
+const formatDoctorName = (name) => {
+  if (!name) return "Doctor";
+  if (name.trim().startsWith("Dr.")) return name;
+  return `Dr. ${name}`;
+};
 
 const formatDate = (dateStr) => {
   if (!dateStr) return "N/A";
@@ -335,10 +342,10 @@ const PatientDashboard = () => {
 
     fetchAppointments(false);
 
-    // Live real-time polling interval (every 4 seconds)
+    // Live real-time polling interval (every 2 seconds)
     const liveInterval = setInterval(() => {
       fetchAppointments(true);
-    }, 4000);
+    }, 2000);
 
     // Live update when window regains focus / user switches tabs
     const handleWindowFocus = () => {
@@ -372,12 +379,14 @@ const PatientDashboard = () => {
   appointments.forEach(app => {
     if (dismissedNotifs.includes(app._id)) return;
 
+    const docNameFormatted = formatDoctorName(app.doctor?.user?.name);
+
     if (app.status === "approved" && app.paymentStatus === "pending") {
       notifications.push({
         id: app._id,
         type: "payment-required",
         icon: "🔔",
-        text: `Your appointment with Dr. ${app.doctor?.user?.name || "Doctor"} on ${formatDate(app.appointmentDate)} at ${app.appointmentTime} has been approved. Please make the payment for further process.`,
+        text: `Your appointment with ${docNameFormatted} on ${formatDate(app.appointmentDate)} at ${app.appointmentTime} has been approved. Please make the payment for further process.`,
         action: (
           <button className="notification-pay-btn" onClick={() => handlePaymentSubmit(app._id)}>
             Pay Fee (₹{app.amount})
@@ -389,7 +398,7 @@ const PatientDashboard = () => {
         id: app._id,
         type: "declined",
         icon: "⚠️",
-        text: `Dr. ${app.doctor?.user?.name || "Doctor"} is not available for the slot on ${formatDate(app.appointmentDate)} at ${app.appointmentTime}. Kindly book for another slot.`
+        text: `${docNameFormatted} is not available for the slot on ${formatDate(app.appointmentDate)} at ${app.appointmentTime}. Kindly book for another slot.`
       });
     }
   });
@@ -637,7 +646,7 @@ const PatientDashboard = () => {
                       <div key={app._id} className="appointment-card-item">
                         <div className="doctor-meta-block">
                           <img 
-                            src={`http://localhost:5000${app.doctor?.profileImage}`} 
+                            src={getImageUrl(app.doctor?.profileImage)} 
                             alt={app.doctor?.user?.name}
                             className="doctor-avatar-circle"
                             onError={(e) => {
@@ -902,7 +911,7 @@ const PatientDashboard = () => {
                       <td>
                         <div className="doc-table-meta">
                           <img
-                            src={`http://localhost:5000${appointment.doctor?.profileImage}`}
+                            src={getImageUrl(appointment.doctor?.profileImage)}
                             alt={appointment.doctor?.user?.name}
                             onError={(e) => {
                               e.target.onerror = null;

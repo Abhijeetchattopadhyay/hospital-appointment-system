@@ -1,15 +1,16 @@
 import { useEffect, useState } from "react";
 import { FaHospital, FaRegClock, FaRupeeSign, FaStar } from "react-icons/fa";
+import { getAllDoctors } from "../../services/doctorService";
+import { getImageUrl } from "../../utils/imageUrl";
 import "./TopDoctors.css";
 
 const TopDoctors = () => {
   const [doctors, setDoctors] = useState([]);
 
   useEffect(() => {
-    fetch("http://localhost:5000/api/doctors")
-      .then((res) => res.json())
+    getAllDoctors()
       .then((data) => setDoctors(data.slice(0, 3)))
-      .catch((error) => console.log(error));
+      .catch((error) => console.log("Failed to fetch top doctors:", error));
   }, []);
 
   return (
@@ -25,8 +26,12 @@ const TopDoctors = () => {
           <div className="top-doctor-card" key={doctor._id}>
             <div className="doctor-img-wrapper">
               <img
-                src={`http://localhost:5000${doctor.profileImage}`}
-                alt={doctor.user?.name}
+                src={getImageUrl(doctor.profileImage)}
+                alt={doctor.user?.name || "Doctor"}
+                onError={(e) => {
+                  e.target.onerror = null;
+                  e.target.src = "https://images.unsplash.com/photo-1559839734-2b71ea197ec2?auto=format&fit=crop&q=80&w=300";
+                }}
               />
               <div className="rating-badge">
                 <FaStar /> 4.8
